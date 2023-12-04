@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class  HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 

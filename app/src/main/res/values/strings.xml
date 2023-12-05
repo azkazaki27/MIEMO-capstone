@@ -4,4 +4,12 @@
     <string name="title_history">History</string>
     <string name="memo_history">Memo History</string>
     <string name="dummy_long_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</string>
+
+    <string name="home_header">Hello $user!</string>
+    <string name="greeting">How do you feel today?</string>
+    <string name="empty_note">You Haven’t Written a Memo Today</string>
+    <string name="write_memo">write a memo!</string>
+    <string name="history_header">Memo History</string>
+    <string name="tv_date">01/01/2024</string>
+    <string name="submit">Submit</string>
 </resources>

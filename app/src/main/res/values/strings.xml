@@ -5,6 +5,7 @@
     <string name="memo_history">Memo History</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
+    <string name="logout">Log Out</string>
     <string name="dummy_long_text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</string>
 
     <string name="home_header">Hello $user!</string>
@@ -15,7 +16,9 @@
     <string name="tv_date">01/01/2024</string>
     <string name="submit">Submit</string>
     <string name="email">Email</string>
+    <string name="lannguage">Language</string>
     <string name="username">Username</string>
+    <string name="profile">Profile</string>
     <string name="password">Password</string>
     <string name="tv_register_to_login_text">Already have an account? Login</string>
     <string name="tv_login_to_register_text">Don’t have an account? Login</string>

@@ -105,7 +105,7 @@
         android:background="@drawable/rounded_button"
         android:backgroundTint="@color/blue_navbar"
         android:padding="12dp"
-        android:text="@string/login"
+        android:text="@string/register"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:textColor="@color/white"

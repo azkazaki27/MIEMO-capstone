@@ -19,7 +19,7 @@ class SigninActivity : AppCompatActivity(), View.OnClickListener
     private val fields: List<View> by lazy {
         listOf(
             binding.tvRegister,
-            binding.edRegisterName,
+            binding.edUsername,
             binding.edEmail,
             binding.edPassword,
             binding.btnRegister,
@@ -49,7 +49,7 @@ class SigninActivity : AppCompatActivity(), View.OnClickListener
                     ).show()
                     return
                 }
-                val name = b.edRegisterName.text.toString().trim()
+                val name = b.edUsername.text.toString().trim()
                 val email = b.edEmail.text.toString().trim()
                 val password = b.edPassword.text.toString().trim()
 

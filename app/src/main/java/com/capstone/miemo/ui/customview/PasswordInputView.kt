@@ -1,4 +1,4 @@
-package ccom.capstone.miemo.ui.customview
+package com.capstone.miemo.ui.customview
 
 import android.content.Context
 import android.text.Editable

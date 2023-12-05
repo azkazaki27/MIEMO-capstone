@@ -12,4 +12,20 @@
     <string name="history_header">Memo History</string>
     <string name="tv_date">01/01/2024</string>
     <string name="submit">Submit</string>
+
+    <string name="ed_login_email_error">Invalid email address</string>
+    <string name="ed_login_email_hint">Email</string>
+    <string name="ed_login_password_error">Password must be at least 8 characters long</string>
+    <string name="ed_login_password_hint">Password</string>
+    <string name="ed_register_name_hint">Name</string>
+    <string name="image_chooser_title">Choose a Picture</string>
+    <string name="menu_logout_toast">Logged out successfully</string>
+    <string name="toast_login_failed">Login failed: %1$s</string>
+    <string name="toast_login_greetings">Welcome %1$s</string>
+    <string name="toast_login_invalid_input">You have invalid input(s)</string>
+    <string name="toast_main_load_failed">Failed to load data: %1$s</string>
+    <string name="toast_register_failed">Register failed: %1$s</string>
+    <string name="toast_register_invalid_input">You have invalid input(s)</string>
+    <string name="toast_register_success">Thanks for joining us</string>
+
 </resources>

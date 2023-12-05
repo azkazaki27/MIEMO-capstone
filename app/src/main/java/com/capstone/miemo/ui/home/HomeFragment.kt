@@ -32,10 +32,19 @@ class  HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        binding.btnAdd.setOnClickListener {
+            showDialog()
+        }
+
         return root
     }
 
+    private fun showDialog() {
+        val dialog = InputMemoFragment()
 
+        dialog.show(childFragmentManager, "inputDialog")
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

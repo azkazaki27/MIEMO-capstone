@@ -17,3 +17,4 @@ interface ApiService {
 
     @POST("register")
     fun register(@Body registerRequest: RegisterRequest): Call<BaseResponse>
+}

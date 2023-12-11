@@ -10,16 +10,19 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.miemo.R
+import com.capstone.miemo.databinding.ActivitySigninBinding
+import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
+import com.capstone.miemo.data.Result
 
-class RegisterActivity : AppCompatActivity() { private lateinit var binding: ActivityRegisterBinding
+class RegisterActivity : AppCompatActivity() { private lateinit var binding: ActivitySigninBinding
 private val authViewModel: AuthViewModel by viewModels {
         ViewModelFactory(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupView()
@@ -29,7 +32,7 @@ private val authViewModel: AuthViewModel by viewModels {
         hideSystemUI()
 
         binding.btnRegister.setOnClickListener { register() }
-        binding.btnLogin.setOnClickListener { gotoLogin() }
+        binding.tvRegisterToLogin.setOnClickListener { gotoLogin() }
     }
 
     private fun hideSystemUI() {
@@ -47,9 +50,9 @@ private val authViewModel: AuthViewModel by viewModels {
 
     private fun register() {
         binding.progressBar.visibility = View.VISIBLE
-        val name = binding.edRegisterName.text.toString()
-        val email = binding.edRegisterEmail.text.toString()
-        val password = binding.edRegisterPassword.text.toString()
+        val name = binding.edUsername.text.toString()
+        val email = binding.edEmail.text.toString()
+        val password = binding.edPassword.text.toString()
         authViewModel.register(name, email, password).observe(this) { result ->
             if (result != null) {
                 when (result) {

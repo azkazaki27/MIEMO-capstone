@@ -38,4 +38,8 @@
     <string name="toast_register_invalid_input">You have invalid input(s)</string>
     <string name="toast_register_success">Thanks for joining us</string>
 
+    <string name="logout_success">Log out success, redirect to login page</string>
+    <string name="login_success">Login success</string>
+    <string name="error_message">There\'s an error: %1$s</string>
+
 </resources>

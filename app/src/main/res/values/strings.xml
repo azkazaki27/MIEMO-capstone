@@ -21,7 +21,7 @@
     <string name="profile">Profile</string>
     <string name="password">Password</string>
     <string name="tv_register_to_login_text">Already have an account? Login</string>
-    <string name="tv_login_to_register_text">Don’t have an account? Login</string>
+    <string name="tv_login_to_register_text">Don’t have an account? Register</string>
 
     <string name="ed_login_email_error">Invalid email address</string>
     <string name="ed_login_email_hint">Email</string>

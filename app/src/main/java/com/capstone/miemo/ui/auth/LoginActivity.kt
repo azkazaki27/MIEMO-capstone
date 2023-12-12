@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import com.capstone.miemo.MainActivity
 import com.capstone.miemo.R
+import com.capstone.miemo.databinding.ActivityLoginBinding
+import com.capstone.miemo.ui.ViewModelFactory
+import com.capstone.miemo.data.Result
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         loggingIn()
 
         binding.btnLogin.setOnClickListener { login() }
-        binding.btnRegister.setOnClickListener { register() }
+        binding.tvLoginToRegister.setOnClickListener { register() }
     }
 
     private fun hideSystemUI() {
@@ -58,9 +61,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        binding.progressBar.visibility = View.VISIBLE
-        val email = binding.edLoginEmail.text.toString()
-        val password = binding.edLoginPassword.text.toString()
+        val email = binding.edEmail.text.toString()
+        val password = binding.edPassword.text.toString()
         authViewModel.login(email, password).observe(this) { result ->
             if (result != null) {
                 when (result) {
@@ -93,14 +95,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun register() {
-        val optionsCompat: ActivityOptionsCompat =
-            ActivityOptionsCompat.makeSceneTransitionAnimation(
-                this, binding.imgLogo, "logo"
-            )
-
         val intent = Intent(this, RegisterActivity::class.java)
-        startActivity(intent, optionsCompat.toBundle())
+        startActivity(intent)
     }
+
 
     private fun gotoMain() {
         val intent = Intent(this, MainActivity::class.java)

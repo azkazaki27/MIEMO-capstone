@@ -39,44 +39,86 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_margin="16dp"
+        android:contentDescription="@string/profile"
         app:layout_constraintStart_toEndOf="@id/home_header"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_account"/>
 
-    <TextView
-        android:id="@+id/text_home"
+    <LinearLayout
+        android:id="@+id/btn_add_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/greeting"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.43" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible">
 
-    <android.widget.Button
-        android:id="@+id/btn_add"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/text_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+        <android.widget.Button
+            android:id="@+id/btn_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:padding="16dp"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:shadowColor="@color/blue_navbar"
+            android:shadowDx="-1"
+            android:shadowDy="-1"
+            android:shadowRadius="1"
+            android:background="@drawable/gradient_background"
+            android:text="@string/write_memo"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/today_memo"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:padding="16dp"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:shadowColor="@color/blue_navbar"
-        android:shadowDx="-1"
-        android:shadowDy="-1"
-        android:shadowRadius="1"
-        android:background="@drawable/gradient_background"
-        android:text="@string/write_memo"
+        android:orientation="vertical"
+        app:circularflow_radiusInDP="10dp"
+        android:background="@color/light_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_home"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/greeting"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_quote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="35dp"
+            android:text="@string/dummy_long_text"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:maxLines="5"
+            android:background="@drawable/gradient_background"/>
+
+        <TextView
+            android:id="@+id/tv_memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:padding="25dp"
+            android:maxLines="7"
+            android:text="@string/dummy_long_text"
+            android:textSize="20sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,10 @@
 package com.capstone.miemo.ui.auth
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -14,16 +16,23 @@ import com.capstone.miemo.databinding.ActivitySigninBinding
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
 import com.capstone.miemo.data.Result
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class RegisterActivity : AppCompatActivity() { private lateinit var binding: ActivitySigninBinding
-private val authViewModel: AuthViewModel by viewModels {
+    private val authViewModel: AuthViewModel by viewModels {
         ViewModelFactory(this)
     }
+
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySigninBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        auth = FirebaseAuth.getInstance()
 
         setupView()
     }
@@ -53,36 +62,39 @@ private val authViewModel: AuthViewModel by viewModels {
         val name = binding.edUsername.text.toString()
         val email = binding.edEmail.text.toString()
         val password = binding.edPassword.text.toString()
-        authViewModel.register(name, email, password).observe(this) { result ->
-            if (result != null) {
-                when (result) {
-                    is Result.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
 
-                    is Result.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            this,
-                            result.data,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        // Go to Login
-                        gotoLogin()
-                    }
-
-                    is Result.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        Toast.makeText(
-                            this,
-                            getString(R.string.error_message, result.error),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+        // Use createUserWithEmailAndPassword to register a new user
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Registration success
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // Registration failed
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    updateUI(null)
                 }
+                binding.progressBar.visibility = View.GONE
             }
+    }
+
+
+    private fun updateUI(user: FirebaseUser?) {
+        if (user != null) {
+            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+            // You can add any additional logic here
+            // For example, you might want to navigate to the login screen
+            gotoLogin()
         }
     }
+
 
     private fun gotoLogin() {
         val intent = Intent(this, LoginActivity::class.java)

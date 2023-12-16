@@ -8,27 +8,28 @@ import com.capstone.miemo.data.local.entity.Memo
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class MemoRepository(application: Application) {
-    private val mMemoDao: MemoDao
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+class MemoRepository(private val database: MemoRoomDatabase) {
 
-    init {
-        val db = MemoRoomDatabase.getDatabase(application)
-        mMemoDao = db.memoDao()
-    }
-
-    fun getAllMemo(): LiveData<List<Memo>> = mMemoDao.getAllMemo()
+    fun getAllMemo(): LiveData<List<Memo>> = database.memoDao().getAllMemo()
 
     fun getMemoByDate(date: String): LiveData<Memo>{
-        return mMemoDao.getMemoByDate(date)
+        return database.memoDao().getMemoByDate(date)
     }
 
     fun insert(memo: Memo){
-        mMemoDao.insert(memo)
+        database.memoDao().insert(memo)
     }
 
     fun delete(memo: Memo){
-        mMemoDao.delete(memo)
+        database.memoDao().delete(memo)
+    }
+
+    companion object{
+        @Volatile
+        private var instance: MemoRepository? = null
+
+        fun getInstance(database: MemoRoomDatabase) : MemoRepository =
+            instance ?:MemoRepository(database)
     }
 
 }

@@ -18,7 +18,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:padding="12dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:background="@drawable/rounded_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +65,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_edittext"
         android:padding="12dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +91,8 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
         android:padding="12dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
+        android:inputType="textPassword"
         android:background="@drawable/rounded_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -139,9 +139,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:visibility="visible" />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

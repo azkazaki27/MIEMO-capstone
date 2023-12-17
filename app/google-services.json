@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623888384315",
+    "project_id": "quick-formula-405704",
+    "storage_bucket": "quick-formula-405704.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623888384315:android:31ab16a9f9fabf0652b71e",
+        "android_client_info": {
+          "package_name": "com.capstone.miemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_mkQ5teUCKKYhDsV5-3iw1GUQCeWTf_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

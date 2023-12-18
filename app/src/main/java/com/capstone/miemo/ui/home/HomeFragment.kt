@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
+import androidx.navigation.fragment.findNavController
 
 class  HomeFragment : Fragment() {
 
@@ -35,6 +37,9 @@ class  HomeFragment : Fragment() {
 
         binding.btnAdd.setOnClickListener {
             showDialog()
+        }
+        binding.profileImage.setOnClickListener {
+            findNavController().navigate(R.id.navigation_profile)
         }
 
         return root

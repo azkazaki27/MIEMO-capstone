@@ -6,23 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.databinding.FragmentInputMemoBinding
+import com.capstone.miemo.ui.ViewModelFactory
 
 class InputMemoFragment: DialogFragment() {
 
     private var _binding: FragmentInputMemoBinding? = null
     private val binding get() = _binding!!
 
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelFactory(requireActivity())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         val rootView: View = inflater.inflate(R.layout.fragment_input_memo, container, false)
 

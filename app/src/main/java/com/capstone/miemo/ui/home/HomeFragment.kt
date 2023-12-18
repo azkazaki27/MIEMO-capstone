@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
+import com.capstone.miemo.ui.ViewModelFactory
+import com.capstone.miemo.ui.auth.AuthViewModel
 
 class  HomeFragment : Fragment() {
 
@@ -19,13 +22,17 @@ class  HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    //private lateinit var homeViewModel: HomeViewModel
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelFactory(requireActivity())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root

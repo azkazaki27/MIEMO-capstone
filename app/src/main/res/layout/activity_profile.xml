@@ -30,7 +30,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_email"
+        android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -46,12 +46,11 @@
         android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
         android:background="@drawable/rounded_edittext"
         android:padding="12dp"
         android:layout_marginHorizontal="35dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
     <!-- NEXT MVP
     <TextView
         android:id="@+id/tv_language"

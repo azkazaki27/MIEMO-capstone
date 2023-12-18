@@ -1,6 +1,8 @@
 package com.capstone.miemo.ui.auth
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -25,6 +27,7 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
     }
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +36,7 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE)
 
         setupView()
     }
@@ -62,6 +66,10 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
         val name = binding.edUsername.text.toString()
         val email = binding.edEmail.text.toString()
         val password = binding.edPassword.text.toString()
+
+        // Save the username to SharedPreferences
+        saveUsername(name)
+
 
         // Use createUserWithEmailAndPassword to register a new user
         auth.createUserWithEmailAndPassword(email, password)
@@ -95,6 +103,11 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
         }
     }
 
+    private fun saveUsername(username: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("username", username)
+        editor.apply()
+    }
 
     private fun gotoLogin() {
         val intent = Intent(this, LoginActivity::class.java)

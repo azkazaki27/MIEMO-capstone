@@ -39,7 +39,7 @@ class  HomeFragment : Fragment() {
             showDialog()
         }
         binding.profileImage.setOnClickListener {
-            findNavController().navigate(R.id.navigation_profile)
+            findNavController().navigate(R.id.action_homeFragment_to_profileActivity)
         }
 
         return root

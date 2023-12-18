@@ -46,10 +46,11 @@
         android:id="@+id/usernameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_edittext"
-        android:padding="12dp"
         android:layout_marginHorizontal="35dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint=""
+        android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_username" />
     <!-- NEXT MVP
     <TextView
@@ -74,6 +75,23 @@
         android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_language" />
         -->
+
+
+    <android.widget.Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@color/blue_navbar"
+        android:padding="12dp"
+        android:text="save"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
 
     <android.widget.Button
         android:id="@+id/btn_logout"

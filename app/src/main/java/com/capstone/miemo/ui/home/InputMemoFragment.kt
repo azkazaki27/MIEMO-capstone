@@ -28,7 +28,9 @@ class InputMemoFragment: DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        _binding = FragmentInputMemoBinding.inflate(inflater, container, false)
         val rootView: View = inflater.inflate(R.layout.fragment_input_memo, container, false)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.dialog_background)
 
         val memoText: EditText = binding.edtInput
         binding.btnSubmit.setOnClickListener {

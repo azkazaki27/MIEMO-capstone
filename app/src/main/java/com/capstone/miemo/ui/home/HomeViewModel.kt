@@ -7,10 +7,11 @@ import androidx.lifecycle.asLiveData
 import com.capstone.miemo.data.AppPreferences
 import com.capstone.miemo.data.MemoRepository
 import com.capstone.miemo.data.local.entity.Memo
+import com.capstone.miemo.data.local.entity.User
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class HomeViewModel(private val repository: MemoRepository, private val preferences: AppPreferences) : ViewModel() {
+class HomeViewModel(private val repository: MemoRepository) : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -21,7 +22,9 @@ class HomeViewModel(private val repository: MemoRepository, private val preferen
         repository.insert(memo)
     }
 
-    val userId: LiveData<String> = preferences.getUserId().asLiveData()
+    fun getSession(): LiveData<User>{
+        return repository.getSession().asLiveData()
+    }
 
     fun getCurrentDate(): String {
         val formatter = SimpleDateFormat("dd/MM/yyyy")

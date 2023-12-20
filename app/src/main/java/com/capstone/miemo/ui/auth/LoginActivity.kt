@@ -17,6 +17,7 @@ import com.capstone.miemo.R
 import com.capstone.miemo.databinding.ActivityLoginBinding
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.data.Result
+import com.capstone.miemo.data.local.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -80,6 +81,19 @@ class LoginActivity : AppCompatActivity() {
                     // Registration success
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+                    if (user != null){
+                        val userPref = user.displayName?.let {
+                            User(
+                                user.uid,
+                                it,
+                                "0"
+                            )
+                        }
+                        if (userPref != null) {
+                            authViewModel.saveUser(userPref)
+                        }
+                    }
+
                     updateUI(user)
                 } else {
                     // Registration failed

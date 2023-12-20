@@ -6,17 +6,22 @@ import androidx.lifecycle.MediatorLiveData
 import com.capstone.miemo.data.local.database.MemoDao
 import com.capstone.miemo.data.local.database.MemoRoomDatabase
 import com.capstone.miemo.data.local.entity.Memo
+import com.capstone.miemo.data.local.entity.User
 import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-class MemoRepository(private val database: MemoRoomDatabase, private val apiService: ApiService) {
+class MemoRepository(
+    private val database: MemoRoomDatabase,
+    private val apiService: ApiService,
+    private val preferences: AppPreferences) {
 
     fun getAllMemo(): LiveData<List<Memo>> = database.memoDao().getAllMemo()
 
@@ -62,12 +67,16 @@ class MemoRepository(private val database: MemoRoomDatabase, private val apiServ
         return result
     }
 
+    fun getSession(): Flow<User> {
+        return preferences.getSession()
+    }
+
     companion object{
         @Volatile
         private var instance: MemoRepository? = null
 
-        fun getInstance(database: MemoRoomDatabase, apiService: ApiService) : MemoRepository =
-            instance ?:MemoRepository(database, apiService)
+        fun getInstance(database: MemoRoomDatabase, apiService: ApiService, preferences: AppPreferences) : MemoRepository =
+            instance ?:MemoRepository(database, apiService, preferences)
     }
 
 }

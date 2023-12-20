@@ -1,8 +1,10 @@
 package com.capstone.miemo.di
 
 import android.content.Context
+import com.capstone.miemo.data.AppPreferences
 import com.capstone.miemo.data.AuthRepository
 import com.capstone.miemo.data.MemoRepository
+import com.capstone.miemo.data.dataStore
 import com.capstone.miemo.data.local.database.MemoRoomDatabase
 import com.capstone.miemo.data.remote.retrofit.ApiConfig
 
@@ -15,6 +17,7 @@ object Injection {
     fun provideMemoRepository(context: Context): MemoRepository{
         val apiService = ApiConfig.getApiService()
         val database = MemoRoomDatabase.getDatabase(context)
-        return MemoRepository.getInstance(database, apiService)
+        val preferences = AppPreferences.getInstance(context.dataStore)
+        return MemoRepository.getInstance(database, apiService, preferences)
     }
 }

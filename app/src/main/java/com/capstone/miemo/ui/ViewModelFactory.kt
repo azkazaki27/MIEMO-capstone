@@ -26,8 +26,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             @Suppress("UNCHECKED_CAST")
             return HomeViewModel(Injection.provideMemoRepository(context), pref) as T
         }else if(modelClass.isAssignableFrom(HistoryViewModel::class.java)){
+            val pref = AppPreferences.getInstance(context.dataStore)
             @Suppress("UNCHECKED_CAST")
-            return HistoryViewModel(Injection.provideMemoRepository(context)) as T
+            return HistoryViewModel(Injection.provideMemoRepository(context),pref) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

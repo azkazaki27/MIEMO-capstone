@@ -42,6 +42,10 @@ class HistoryFragment : Fragment() {
         memoAdapter = MemoAdapter(emptyList())
         recyclerView.adapter = memoAdapter
 
+        historyViewModel.allMemo.observe(viewLifecycleOwner) { memoList ->
+            // Update the adapter with the new list of memos
+            memoAdapter.updateData(memoList)
+        }
 
         return root
     }

@@ -37,4 +37,5 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
             dateTextView.text = memo.date
         }
     }
+
 }

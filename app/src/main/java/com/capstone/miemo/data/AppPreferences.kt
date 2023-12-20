@@ -27,6 +27,12 @@ class AppPreferences private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    fun getUserId(): Flow<String>{
+        return dataStore.data.map { preferences ->
+            preferences[AUTH_USERID_KEY] ?: ""
+        }
+    }
+
     suspend fun saveAuthUser(user: User) {
         dataStore.edit { preferences ->
             preferences[AUTH_USERID_KEY] = user.userId

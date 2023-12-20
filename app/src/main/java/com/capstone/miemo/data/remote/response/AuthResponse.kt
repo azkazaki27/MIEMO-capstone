@@ -22,6 +22,11 @@ data class RegisterRequest(
     val password: String
 )
 
+data class SubmitRequest(
+    val userId: String,
+    val text: String
+)
+
 data class AuthUser(
     @field:SerializedName("userId")
     val userId: String,

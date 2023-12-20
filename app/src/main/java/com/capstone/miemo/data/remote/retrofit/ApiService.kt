@@ -7,6 +7,8 @@ import com.capstone.miemo.data.remote.response.LoginResponse
 import com.capstone.miemo.data.remote.response.RegisterRequest
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 
 interface ApiService {
@@ -17,4 +19,11 @@ interface ApiService {
 
     @POST("register")
     fun register(@Body registerRequest: RegisterRequest): Call<BaseResponse>
+
+    //POST
+    @POST("submit-text")
+    fun submitMemo(
+        @Field("userId") userId: String,
+        @Field("text") text: String
+    ):Call<BaseResponse>
 }

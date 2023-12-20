@@ -13,7 +13,8 @@ object Injection {
     }
 
     fun provideMemoRepository(context: Context): MemoRepository{
+        val apiService = ApiConfig.getApiService()
         val database = MemoRoomDatabase.getDatabase(context)
-        return MemoRepository.getInstance(database)
+        return MemoRepository.getInstance(database, apiService)
     }
 }

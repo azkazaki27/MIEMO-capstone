@@ -12,6 +12,7 @@
         android:layout_marginTop="90dp"
         android:text="@string/login"
         android:textColor="@color/black"
+        android:shadowColor="@color/black"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

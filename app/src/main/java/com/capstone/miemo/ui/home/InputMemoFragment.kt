@@ -23,6 +23,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class InputMemoFragment: DialogFragment() {
@@ -44,28 +45,33 @@ class InputMemoFragment: DialogFragment() {
 
         val btnSubmit: Button = rootView.findViewById(R.id.btn_submit)
 
-        btnSubmit.setOnClickListener {
-            val memoText: EditText = rootView.findViewById(R.id.edt_input)
-            val userId = homeViewModel.userId.toString()
-            val submitMemo = SubmitRequest(userId, memoText.toString())
-            submitText(submitMemo)
-            val quote = getText(userId)
-            val date = homeViewModel.getCurrentDate()
-            val memo = Memo(
-                0,
-                memoText.text.toString(),
-                quote.toString(),
-                date
-            )
-            saveMemo(memo)
+        homeViewModel.userId.observe(this){ id ->
+
+
+            btnSubmit.setOnClickListener {
+                val memoText = rootView.findViewById<EditText>(R.id.edt_input).text.toString()
+                //val userId = homeViewModel.userId.toString()
+                val submitMemo = SubmitRequest(id, memoText)
+                submitText(submitMemo)
+                val quote = getText(id).toString()
+                val date = homeViewModel.getCurrentDate()
+                val memo = Memo(
+                    0,
+                    memoText,
+                    quote,
+                    date
+                )
+                saveMemo(memo)
+            }
         }
+
 
         return rootView
     }
 
     private fun submitText(memo: SubmitRequest) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            memoCollection.document(memo.userId).set({memo.text})
+            memoCollection.add(memo).await()
             withContext(Dispatchers.Main){
                 Toast.makeText(requireActivity(), "Submit Memo Success", Toast.LENGTH_SHORT).show()
             }
@@ -78,7 +84,7 @@ class InputMemoFragment: DialogFragment() {
 
     private fun getText(userId: String) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            memoCollection.document(userId).get()
+            memoCollection.document(userId).get().result.data
             withContext(Dispatchers.Main){
                 Toast.makeText(requireActivity(), "Get Memo Success", Toast.LENGTH_SHORT).show()
             }

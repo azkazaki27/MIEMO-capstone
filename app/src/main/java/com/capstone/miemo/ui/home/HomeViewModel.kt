@@ -21,7 +21,7 @@ class HomeViewModel(private val repository: MemoRepository, private val preferen
         repository.insert(memo)
     }
 
-    val userId = preferences.getUserId().asLiveData()
+    val userId: LiveData<String> = preferences.getUserId().asLiveData()
 
     fun getCurrentDate(): String {
         val formatter = SimpleDateFormat("dd/MM/yyyy")

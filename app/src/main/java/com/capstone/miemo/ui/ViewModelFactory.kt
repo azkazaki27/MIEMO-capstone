@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.data.AppPreferences
 import com.capstone.miemo.di.Injection
 import com.capstone.miemo.ui.auth.AuthViewModel
+import com.capstone.miemo.ui.history.HistoryViewModel
 import com.capstone.miemo.ui.home.HomeViewModel
 
 
@@ -24,6 +25,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             val pref = AppPreferences.getInstance(context.dataStore)
             @Suppress("UNCHECKED_CAST")
             return HomeViewModel(Injection.provideMemoRepository(context), pref) as T
+        }else if(modelClass.isAssignableFrom(HistoryViewModel::class.java)){
+            @Suppress("UNCHECKED_CAST")
+            return HistoryViewModel(Injection.provideMemoRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

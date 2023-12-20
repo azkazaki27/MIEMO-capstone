@@ -1,13 +1,14 @@
 package com.capstone.miemo.ui.history
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.capstone.miemo.data.MemoRepository
+import com.capstone.miemo.data.local.entity.Memo
 
-class HistoryViewModel : ViewModel() {
+class HistoryViewModel(private val memoRepository: MemoRepository) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Memo History"
-    }
-    val text: LiveData<String> = _text
+    // LiveData for memo data
+    val allMemo: LiveData<List<Memo>> = memoRepository.getAllMemo()
+
+    // You can add other functions related to history here
 }

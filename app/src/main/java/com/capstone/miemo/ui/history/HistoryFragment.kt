@@ -4,37 +4,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHistoryBinding
 
 class HistoryFragment : Fragment() {
 
     private var _binding: FragmentHistoryBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var memoAdapter: MemoAdapter
+    private lateinit var historyViewModel: HistoryViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(HistoryViewModel::class.java)
-
+        historyViewModel = ViewModelProvider(this).get(HistoryViewModel::class.java)
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textMemohistory
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        // Move the RecyclerView initialization here
+        val recyclerView: RecyclerView = root.findViewById(R.id.rv_memo)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        // Initialize MemoAdapter with an empty list
+        memoAdapter = MemoAdapter(emptyList())
+        recyclerView.adapter = memoAdapter
+
+
         return root
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

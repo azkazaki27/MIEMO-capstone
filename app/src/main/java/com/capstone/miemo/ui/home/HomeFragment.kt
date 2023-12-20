@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
@@ -44,9 +45,9 @@ class  HomeFragment : Fragment() {
         }
 
         val currentDate = homeViewModel.getCurrentDate()
-//        val todayMemo = homeViewModel.getMemoByDate(currentDate)
-//
-//        updateUI(todayMemo as Memo)
+        val todayMemo = homeViewModel.getMemoByDate(currentDate)
+
+        updateUI(todayMemo)
 
         binding.btnAdd.setOnClickListener {
             showDialog()
@@ -59,13 +60,13 @@ class  HomeFragment : Fragment() {
         return root
     }
 
-    private fun updateUI(todayMemo: Memo){
-        if(todayMemo.date != null){
+    private fun updateUI(todayMemo: LiveData<Memo>){
+        if(todayMemo.value?.date != null){
             binding.btnAddLayout.visibility = View.GONE
             binding.todayMemo.visibility = View.VISIBLE
 
-            binding.tvQuote.text = todayMemo.quote
-            binding.tvMemo.text = todayMemo.memo
+            binding.tvQuote.text = todayMemo.value?.quote
+            binding.tvMemo.text = todayMemo.value?.memo
         }else{
             binding.btnAddLayout.visibility = View.VISIBLE
             binding.todayMemo.visibility = View.GONE

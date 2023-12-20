@@ -47,9 +47,17 @@ class InputMemoFragment: DialogFragment() {
         btnSubmit.setOnClickListener {
             val memoText: EditText = rootView.findViewById(R.id.edt_input)
             val userId = homeViewModel.userId.toString()
-            val memo = SubmitRequest(userId, memoText.toString())
-            submitText(memo)
-            dismiss()
+            val submitMemo = SubmitRequest(userId, memoText.toString())
+            submitText(submitMemo)
+            val quote = getText(userId)
+            val date = homeViewModel.getCurrentDate()
+            val memo = Memo(
+                0,
+                memoText.text.toString(),
+                quote.toString(),
+                date
+            )
+            saveMemo(memo)
         }
 
         return rootView
@@ -57,7 +65,7 @@ class InputMemoFragment: DialogFragment() {
 
     private fun submitText(memo: SubmitRequest) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            memoCollection.add(memo)
+            memoCollection.document(memo.userId).set({memo.text})
             withContext(Dispatchers.Main){
                 Toast.makeText(requireActivity(), "Submit Memo Success", Toast.LENGTH_SHORT).show()
             }
@@ -66,5 +74,25 @@ class InputMemoFragment: DialogFragment() {
                 Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun getText(userId: String) = CoroutineScope(Dispatchers.IO).launch {
+        try {
+            memoCollection.document(userId).get()
+            withContext(Dispatchers.Main){
+                Toast.makeText(requireActivity(), "Get Memo Success", Toast.LENGTH_SHORT).show()
+            }
+        }catch (e: Exception){
+            withContext(Dispatchers.Main){
+                Toast.makeText(requireActivity(), e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun saveMemo(memo: Memo){
+        CoroutineScope(Dispatchers.IO).launch {
+            homeViewModel.insert(memo)
+        }
+        dismiss()
     }
 }

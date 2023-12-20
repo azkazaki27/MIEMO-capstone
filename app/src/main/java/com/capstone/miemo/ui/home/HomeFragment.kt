@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
+import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
 
@@ -42,14 +43,37 @@ class  HomeFragment : Fragment() {
             textView.text = it
         }
 
+        val currentDate = homeViewModel.getCurrentDate()
+//        val todayMemo = homeViewModel.getMemoByDate(currentDate)
+//
+//        updateUI(todayMemo as Memo)
+
         binding.btnAdd.setOnClickListener {
             showDialog()
         }
+
         binding.profileImage.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_profileActivity)
         }
 
         return root
+    }
+
+    private fun updateUI(todayMemo: Memo){
+        if(todayMemo.date != null){
+            binding.btnAddLayout.visibility = View.GONE
+            binding.todayMemo.visibility = View.VISIBLE
+
+            binding.tvQuote.text = todayMemo.quote
+            binding.tvMemo.text = todayMemo.memo
+        }else{
+            binding.btnAddLayout.visibility = View.VISIBLE
+            binding.todayMemo.visibility = View.GONE
+
+            binding.btnAdd.setOnClickListener {
+                showDialog()
+            }
+        }
     }
 
     private fun showDialog() {

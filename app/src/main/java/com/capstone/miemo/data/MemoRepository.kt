@@ -29,9 +29,11 @@ class MemoRepository(
 
     fun getAllMemo(): LiveData<List<Memo>> = database.memoDao().getAllMemo()
 
-    fun getMemoByDate(date: String): LiveData<Memo>{
+    fun getMemoByDate(date: String): LiveData<Memo>?{
         return database.memoDao().getMemoByDate(date)
     }
+
+    fun getMemoToday(date: String) = database.memoDao().getMemoByDate(date)
 
     fun getMemoById(memoId: Int): LiveData<Memo> {
         return database.memoDao().getMemoById(memoId)

@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        ReadJSONFromAssets(applicationContext, "quote-output.json")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

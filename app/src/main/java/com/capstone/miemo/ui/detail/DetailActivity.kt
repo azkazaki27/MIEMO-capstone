@@ -2,6 +2,7 @@ package com.capstone.miemo.ui.detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
@@ -10,6 +11,7 @@ import com.capstone.miemo.ui.ViewModelFactory
 class DetailActivity : AppCompatActivity() {
     private lateinit var tvDate: TextView
     private lateinit var tvMemo: TextView
+    private lateinit var backButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,7 @@ class DetailActivity : AppCompatActivity() {
         // Inisialisasi TextView di halaman detail
         tvDate = findViewById(R.id.tv_date)
         tvMemo = findViewById(R.id.tv_memo)
+        backButton = findViewById(R.id.btn_back)
 
         // Observe LiveData untuk memo yang sesuai dengan memoId
         detailViewModel.getMemoById(memoId).observe(this) { memo ->
@@ -35,5 +38,7 @@ class DetailActivity : AppCompatActivity() {
                 // Handle the case where memo is null, e.g., show an error message or navigate back
             }
         }
+
+        backButton.setOnClickListener { finish() }
     }
 }

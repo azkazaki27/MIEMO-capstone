@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
 import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.notification.DailyReminder
 import com.capstone.miemo.ui.ViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.internal.format
 
 class  HomeFragment : Fragment() {
@@ -47,9 +51,13 @@ class  HomeFragment : Fragment() {
             binding.homeHeader.text = format(getString(R.string.home_header), user.name)
         }
         val currentDate = homeViewModel.getCurrentDate()
-        homeViewModel.getMemoByDate(currentDate).observe(requireActivity()){ todayMemo ->
+        homeViewModel.getMemoByDate(currentDate)?.observe(requireActivity()){ todayMemo ->
             updateUI(todayMemo)
         }
+//        val todayMemo = lifecycleScope.launch{
+//            homeViewModel.getTodayMemo(currentDate)
+//        }
+//        updateUI(todayMemo)
 
         binding.btnAdd.setOnClickListener {
             showDialog()
@@ -62,8 +70,8 @@ class  HomeFragment : Fragment() {
         return root
     }
 
-    private fun updateUI(todayMemo: Memo){
-        if(todayMemo.date != null){
+    private fun updateUI(todayMemo: Memo?){
+        if(todayMemo?.date != null){
             binding.btnAddLayout.visibility = View.GONE
             binding.todayMemo.visibility = View.VISIBLE
             DailyReminder().cancelAlarm(requireContext())

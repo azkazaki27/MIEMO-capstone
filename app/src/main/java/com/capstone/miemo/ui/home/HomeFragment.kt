@@ -16,6 +16,7 @@ import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.notification.DailyReminder
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
+import okhttp3.internal.format
 
 class  HomeFragment : Fragment() {
 
@@ -45,6 +46,9 @@ class  HomeFragment : Fragment() {
             textView.text = it
         }
 
+        homeViewModel.getSession().observe(requireActivity()){ user ->
+            binding.homeHeader.text = format(getString(R.string.home_header), user.name)
+        }
         val currentDate = homeViewModel.getCurrentDate()
         val todayMemo = homeViewModel.getMemoByDate(currentDate)
 

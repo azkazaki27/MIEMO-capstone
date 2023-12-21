@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.miemo.R
+import com.capstone.miemo.data.local.entity.User
 import com.capstone.miemo.databinding.ActivityProfileBinding
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
@@ -58,13 +59,10 @@ class ProfileActivity : AppCompatActivity() {
 
             profileViewModel.getSession().observe(this){
                 profileViewModel.updateUsername(it.userId, enteredUsername)
+
+                profileViewModel.saveSession(User(it.userId, enteredUsername, it.token))
             }
 
-            // Save the username in SharedPreferences
-            with(sharedPreferences.edit()) {
-                putString("username", enteredUsername)
-                apply()
-            }
             Toast.makeText(this, "Username saved successfully", Toast.LENGTH_SHORT).show()
             finish()
         }
@@ -76,6 +74,7 @@ class ProfileActivity : AppCompatActivity() {
     }
     private fun login() {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
 }

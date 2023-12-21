@@ -3,6 +3,7 @@ package com.capstone.miemo.data
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.viewModelScope
 import com.capstone.miemo.data.local.database.MemoDao
 import com.capstone.miemo.data.local.database.MemoRoomDatabase
 import com.capstone.miemo.data.local.entity.Memo
@@ -14,6 +15,7 @@ import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -103,6 +105,10 @@ class MemoRepository(
 
     fun getSession(): Flow<User> {
         return preferences.getSession()
+    }
+
+    suspend fun saveUser(user: User) {
+        preferences.saveAuthUser(user)
     }
 
     suspend fun logOut(){

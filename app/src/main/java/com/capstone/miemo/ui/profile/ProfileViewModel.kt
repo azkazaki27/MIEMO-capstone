@@ -16,6 +16,12 @@ class ProfileViewModel(private val repository: MemoRepository): ViewModel() {
 
     fun updateUsername(userId: String, newName: String) = repository.updateUsername(userId, newName)
 
+    fun saveSession(user: User){
+        viewModelScope.launch {
+            repository.saveUser(user)
+        }
+    }
+
     fun logOut(){
         viewModelScope.launch{
             repository.logOut()

@@ -13,6 +13,7 @@ import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
 import com.capstone.miemo.data.local.entity.Memo
+import com.capstone.miemo.notification.DailyReminder
 import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.AuthViewModel
 
@@ -64,12 +65,14 @@ class  HomeFragment : Fragment() {
         if(todayMemo.value?.date != null){
             binding.btnAddLayout.visibility = View.GONE
             binding.todayMemo.visibility = View.VISIBLE
+            DailyReminder().cancelAlarm(requireContext())
 
             binding.tvQuote.text = todayMemo.value?.quote
             binding.tvMemo.text = todayMemo.value?.memo
         }else{
             binding.btnAddLayout.visibility = View.VISIBLE
             binding.todayMemo.visibility = View.GONE
+            DailyReminder().setDailyReminder(requireContext())
 
             binding.btnAdd.setOnClickListener {
                 showDialog()

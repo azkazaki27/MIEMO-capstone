@@ -33,6 +33,7 @@
             android:layout_height="80dp"
             android:background="@color/sand"
             android:padding="4sp"
+            android:maxLines="3"
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:text="@string/dummy_long_text"

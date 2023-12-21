@@ -23,6 +23,7 @@
         android:layout_margin="8dp"
         android:text="@string/tv_date"
         android:textSize="20sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/btn_back"
         app:layout_constraintBottom_toBottomOf="@id/btn_back"/>
@@ -34,6 +35,7 @@
         android:layout_margin="20dp"
         android:text="@string/dummy_long_text"
         android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_back"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -46,6 +48,7 @@
         android:padding="35dp"
         android:text="@string/dummy_long_text"
         android:textSize="20sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:maxLines="7"
         android:background="@drawable/gradient_background"

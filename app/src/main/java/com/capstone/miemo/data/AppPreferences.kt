@@ -45,6 +45,14 @@ class AppPreferences private constructor(private val dataStore: DataStore<Prefer
         }
     }
 
+    suspend fun logOut(){
+        dataStore.edit { preferences ->
+            preferences[AUTH_USERID_KEY] = ""
+            preferences[AUTH_USERNAME_KEY] = ""
+            preferences[AUTH_TOKEN_KEY] = ""
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: AppPreferences? = null

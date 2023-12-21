@@ -31,11 +31,6 @@ data class RegisterRequest  (
     val password: String
 )
 
-data class SubmitRequest(
-    val userId: String,
-    val text: String
-)
-
 data class AuthUser(
     @field:SerializedName("userId")
     val userId: String,
@@ -43,4 +38,14 @@ data class AuthUser(
     val user: String,
     @field:SerializedName("token")
     val token: String
+)
+
+data class SubmitRequest(
+    val userId: String,
+    val text: String
+)
+
+data class UpdateRequest(
+    val userId: String,
+    val newUsername: String
 )

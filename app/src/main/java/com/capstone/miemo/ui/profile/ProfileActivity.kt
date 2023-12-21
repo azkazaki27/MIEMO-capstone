@@ -7,9 +7,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.ActivityProfileBinding
+import com.capstone.miemo.ui.ViewModelFactory
+import com.capstone.miemo.ui.auth.AuthViewModel
+import com.capstone.miemo.ui.auth.LoginActivity
 import com.capstone.miemo.ui.auth.RegisterActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +22,6 @@ import com.google.firebase.auth.auth
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var auth: FirebaseAuth
 
     private lateinit var tvProfile: TextView
     private lateinit var imgProfile: ImageView
@@ -26,6 +29,10 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var btnLogout: Button
     private lateinit var btnSave: Button
+
+    private val profileViewModel: ProfileViewModel by viewModels{
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,21 +56,26 @@ class ProfileActivity : AppCompatActivity() {
             // Get the entered username
             val enteredUsername: String = usernameEditText.text.toString()
 
+            profileViewModel.getSession().observe(this){
+                profileViewModel.updateUsername(it.userId, enteredUsername)
+            }
+
             // Save the username in SharedPreferences
             with(sharedPreferences.edit()) {
                 putString("username", enteredUsername)
                 apply()
             }
             Toast.makeText(this, "Username saved successfully", Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         btnLogout.setOnClickListener {
-            Firebase.auth.signOut()
-            register()
+            profileViewModel.logOut()
+            login()
         }
     }
-    private fun register() {
-        val intent = Intent(this, RegisterActivity::class.java)
+    private fun login() {
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 }

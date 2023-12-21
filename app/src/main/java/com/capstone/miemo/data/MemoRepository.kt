@@ -9,6 +9,7 @@ import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.data.local.entity.User
 import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.response.SubmitRequest
+import com.capstone.miemo.data.remote.response.UpdateRequest
 import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -69,8 +70,43 @@ class MemoRepository(
         return result
     }
 
+    fun updateUsername(userId: String, newName: String): LiveData<Result<String>>{
+        val result = MediatorLiveData<Result<String>>()
+        result.value = Result.Loading
+        val updateRequest = UpdateRequest(userId, newName)
+        val client = apiService.updateUsername(updateRequest)
+        client.enqueue(object : Callback<BaseResponse>{
+            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+                if (response.isSuccessful) {
+                    val registerResponse = response.body()
+                    val message = registerResponse?.message
+                    if (message != null) {
+                        result.value = Result.Success(message)
+                    }
+                } else {
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse>() {}.type
+                    val baseResponse: BaseResponse? = gson.fromJson(response.errorBody()!!.string(), type)
+                    if (baseResponse != null) {
+                        result.value = Result.Error(baseResponse.message)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                result.value = Result.Error(t.message.toString())
+            }
+
+        })
+        return result
+    }
+
     fun getSession(): Flow<User> {
         return preferences.getSession()
+    }
+
+    suspend fun logOut(){
+        preferences.logOut()
     }
 
     companion object{

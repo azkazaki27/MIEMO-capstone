@@ -8,9 +8,11 @@ import com.capstone.miemo.data.remote.response.LoginResponse
 import com.capstone.miemo.data.remote.response.RegisterRequest
 import com.capstone.miemo.data.remote.response.RegisterResponse
 import com.capstone.miemo.data.remote.response.SubmitRequest
+import com.capstone.miemo.data.remote.response.UpdateRequest
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     // AUTH
@@ -24,4 +26,8 @@ interface ApiService {
     //POST
     @POST("/submit-text")
     fun submitMemo(@Body submitRequest: SubmitRequest):Call<BaseResponse>
+
+    //UPDATE USERNAME
+    @PUT("/update-username")
+    fun updateUsername(@Body updateUsername: UpdateRequest): Call<BaseResponse>
 }

@@ -7,15 +7,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.FragmentHomeBinding
 import androidx.navigation.fragment.findNavController
 import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.notification.DailyReminder
 import com.capstone.miemo.ui.ViewModelFactory
-import com.capstone.miemo.ui.auth.AuthViewModel
 import okhttp3.internal.format
 
 class  HomeFragment : Fragment() {
@@ -50,9 +47,9 @@ class  HomeFragment : Fragment() {
             binding.homeHeader.text = format(getString(R.string.home_header), user.name)
         }
         val currentDate = homeViewModel.getCurrentDate()
-        val todayMemo = homeViewModel.getMemoByDate(currentDate)
-
-        //updateUI(todayMemo)
+        homeViewModel.getMemoByDate(currentDate).observe(requireActivity()){ todayMemo ->
+            updateUI(todayMemo)
+        }
 
         binding.btnAdd.setOnClickListener {
             showDialog()
@@ -65,14 +62,14 @@ class  HomeFragment : Fragment() {
         return root
     }
 
-    private fun updateUI(todayMemo: LiveData<Memo>){
-        if(todayMemo.value?.date != null){
+    private fun updateUI(todayMemo: Memo){
+        if(todayMemo.date != null){
             binding.btnAddLayout.visibility = View.GONE
             binding.todayMemo.visibility = View.VISIBLE
             DailyReminder().cancelAlarm(requireContext())
 
-            binding.tvQuote.text = todayMemo.value?.quote
-            binding.tvMemo.text = todayMemo.value?.memo
+            binding.tvQuote.text = todayMemo.quote
+            binding.tvMemo.text = todayMemo.memo
         }else{
             binding.btnAddLayout.visibility = View.VISIBLE
             binding.todayMemo.visibility = View.GONE

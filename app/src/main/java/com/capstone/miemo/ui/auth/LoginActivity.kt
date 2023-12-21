@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupView() {
         hideSystemUI()
 
-        //loggingIn()
+        loggingIn()
 
         binding.btnLogin.setOnClickListener { login() }
         binding.tvLoginToRegister.setOnClickListener { register() }
@@ -65,8 +65,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loggingIn() {
-        authViewModel.isLoggedIn().observe(this) { isLoggedIn ->
-            if (isLoggedIn) gotoMain()
+        authViewModel.getSession().observe(this) { user ->
+            if (user.token != "") {
+                gotoMain()
+            }
         }
     }
 
@@ -125,9 +127,10 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun gotoMain() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this@LoginActivity, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        finish()
     }
 
 }

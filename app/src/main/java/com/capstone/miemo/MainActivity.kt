@@ -2,21 +2,27 @@ package com.capstone.miemo
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.capstone.miemo.databinding.ActivityMainBinding
+import com.capstone.miemo.ui.ViewModelFactory
 import com.capstone.miemo.ui.auth.LoginActivity
+import com.capstone.miemo.ui.home.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var auth: FirebaseAuth
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,15 +30,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
-
-        // Periksa apakah pengguna sudah login
-        if (auth.currentUser == null) {
-            // Jika belum login, arahkan ke halaman login
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()  // Tutup activity agar pengguna tidak dapat kembali menggunakan tombol back
-            return
+        homeViewModel.getSession().observe(this){
+            if(it.token == ""){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
 
         val navView: BottomNavigationView = binding.navView
@@ -51,5 +54,3 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 }
-
-//ini tes commit

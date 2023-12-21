@@ -6,6 +6,7 @@ import com.capstone.miemo.data.local.entity.User
 import com.capstone.miemo.data.remote.response.AuthUser
 import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.response.LoginRequest
+import com.capstone.miemo.data.remote.response.LoginResponse
 import com.capstone.miemo.data.remote.response.RegisterRequest
 import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
@@ -23,15 +24,16 @@ class AuthRepository private constructor(
         loginResult.value = Result.Loading
         val loginRequest = LoginRequest(email, password)
         val client = apiService.login(loginRequest)
-        client.enqueue(object : Callback<AuthUser> {
-            override fun onResponse(call: Call<AuthUser>, response: Response<AuthUser>) {
+        client.enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    if (loginResponse != null) {
+                    val authUser = loginResponse?.loginResult
+                    if (authUser != null) {
                         val user = User(
-                            loginResponse.userId,
-                            loginResponse.user,
-                            loginResponse.token
+                            authUser.userId,
+                            authUser.user,
+                            authUser.token
                         )
                         loginResult.value = Result.Success(user)
                     }
@@ -45,7 +47,7 @@ class AuthRepository private constructor(
                 }
             }
 
-            override fun onFailure(call: Call<AuthUser>, t: Throwable) {
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 loginResult.value = Result.Error(t.message.toString())
             }
         })

@@ -29,4 +29,8 @@ class AuthViewModel(private val pref: AppPreferences, private val authRepository
     fun logout() {
         saveUser(User("", "Guest", ""))
     }
+
+    fun getSession(): LiveData<User>{
+        return pref.getSession().asLiveData()
+    }
 }

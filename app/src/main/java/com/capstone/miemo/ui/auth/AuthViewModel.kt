@@ -21,7 +21,7 @@ class AuthViewModel(private val pref: AppPreferences, private val authRepository
         }
     }
 
-    fun login(username: String, password: String) = authRepository.login(username, password)
+    fun login(email: String, password: String) = authRepository.login(email, password)
 
     fun register(email: String, password: String, username: String) =
         authRepository.register(email, password, username)

@@ -72,16 +72,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         binding.progressBar.visibility = View.VISIBLE
-        val username = binding.edUsername.text.toString()
+        val email = binding.edEmail.text.toString()
         val password = binding.edPassword.text.toString()
 
         // Use createUserWithEmailAndPassword to register a new user
-        if (username.isNotEmpty() && password.isNotEmpty()) {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
             // Show progress bar
             binding.progressBar.visibility = View.VISIBLE
 
             // Perform login
-            authViewModel.login(username, password).observe(this) { result ->
+            authViewModel.login(email, password).observe(this) { result ->
                 when (result) {
                     is Result.Success -> {
                         // Hide progress bar

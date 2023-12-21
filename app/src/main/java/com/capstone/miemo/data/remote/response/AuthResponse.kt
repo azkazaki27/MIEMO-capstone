@@ -21,7 +21,7 @@ data class RegisterResponse(
 )
 
 data class LoginRequest(
-    val username: String,
+    val email: String,
     val password: String
 )
 

@@ -19,9 +19,9 @@ class AuthRepository private constructor(
 ) {
     private val loginResult = MediatorLiveData<Result<User>>()
 
-    fun login(username: String, password: String): LiveData<Result<User>> {
+    fun login(email: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Loading
-        val loginRequest = LoginRequest(username, password)
+        val loginRequest = LoginRequest(email, password)
         val client = apiService.login(loginRequest)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {

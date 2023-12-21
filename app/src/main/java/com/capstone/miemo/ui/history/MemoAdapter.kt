@@ -1,5 +1,6 @@
 package com.capstone.miemo.ui.history
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.miemo.R
 import com.capstone.miemo.data.local.entity.Memo
+import com.capstone.miemo.ui.detail.DetailActivity
 
 class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
 
@@ -24,6 +26,11 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
         val memo = memoList[position]
         holder.bind(memo)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(it.context, DetailActivity::class.java)
+            intent.putExtra("MEMO_DATE", memo.id) // Ganti dengan ID atau data yang sesuai
+            it.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = memoList.size

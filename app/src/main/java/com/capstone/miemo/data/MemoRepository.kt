@@ -33,6 +33,10 @@ class MemoRepository(
         return database.memoDao().getMemoByDate(date)
     }
 
+    fun getMemoById(memoId: Int): LiveData<Memo> {
+        return database.memoDao().getMemoById(memoId)
+    }
+
     fun insert(memo: Memo){
         database.memoDao().insert(memo)
     }

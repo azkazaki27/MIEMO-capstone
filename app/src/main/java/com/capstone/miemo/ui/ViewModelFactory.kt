@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.data.AppPreferences
 import com.capstone.miemo.di.Injection
 import com.capstone.miemo.ui.auth.AuthViewModel
+import com.capstone.miemo.ui.detail.DetailViewModel
 import com.capstone.miemo.ui.history.HistoryViewModel
 import com.capstone.miemo.ui.home.HomeViewModel
 import com.capstone.miemo.ui.profile.ProfileViewModel
@@ -32,6 +33,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
         }else if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
             @Suppress("UNCHECKED_CAST")
             return ProfileViewModel(Injection.provideMemoRepository(context)) as T
+        }else if(modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return DetailViewModel(Injection.provideMemoRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

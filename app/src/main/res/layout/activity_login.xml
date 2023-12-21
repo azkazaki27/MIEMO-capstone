@@ -20,19 +20,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_email"
+        android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="40dp"
-        android:text="@string/email"
+        android:text="@string/username"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_login" />
 
-    <com.capstone.miemo.ui.customview.EmailInputView
-        android:id="@+id/ed_email"
+    <EditText
+        android:id="@+id/ed_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -43,7 +43,7 @@
         android:background="@drawable/rounded_edittext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
     <TextView
         android:id="@+id/tv_password"
@@ -55,7 +55,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_email" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_username" />
 
     <com.capstone.miemo.ui.customview.PasswordInputView
         android:id="@+id/ed_password"

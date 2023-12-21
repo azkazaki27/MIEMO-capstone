@@ -19,9 +19,9 @@ class AuthRepository private constructor(
 ) {
     private val loginResult = MediatorLiveData<Result<User>>()
 
-    fun login(email: String, password: String): LiveData<Result<User>> {
+    fun login(username: String, password: String): LiveData<Result<User>> {
         loginResult.value = Result.Loading
-        val loginRequest = LoginRequest(email, password)
+        val loginRequest = LoginRequest(username, password)
         val client = apiService.login(loginRequest)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -29,7 +29,7 @@ class AuthRepository private constructor(
                     val loginResponse = response.body()
                     val authUser = loginResponse?.loginResult
                     if (authUser != null) {
-                        val user = User(authUser.userId, authUser.name, authUser.token)
+                        val user = User(authUser.userId, authUser.username, authUser.token)
                         loginResult.value = Result.Success(user)
                     }
                 } else {
@@ -49,10 +49,10 @@ class AuthRepository private constructor(
         return loginResult
     }
 
-    fun register(name: String, email: String, password: String): LiveData<Result<String>> {
+    fun register(username: String, email: String, password: String): LiveData<Result<String>> {
         val result = MediatorLiveData<Result<String>>()
         result.value = Result.Loading
-        val registerRequest = RegisterRequest(name, email, password)
+        val registerRequest = RegisterRequest(username, email, password)
         val client = apiService.register(registerRequest)
         client.enqueue(object : Callback<BaseResponse> {
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {

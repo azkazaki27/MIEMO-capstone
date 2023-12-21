@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.capstone.miemo.MainActivity
 import com.capstone.miemo.R
 import com.capstone.miemo.databinding.ActivityLoginBinding
@@ -71,42 +72,42 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         binding.progressBar.visibility = View.VISIBLE
-        val email = binding.edEmail.text.toString()
+        val username = binding.edUsername.text.toString()
         val password = binding.edPassword.text.toString()
 
         // Use createUserWithEmailAndPassword to register a new user
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Registration success
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    if (user != null){
-                        val userPref = user.displayName?.let {
-                            User(
-                                user.uid,
-                                it,
-                                "0"
-                            )
-                        }
-                        if (userPref != null) {
-                            authViewModel.saveUser(userPref)
-                        }
+        if (username.isNotEmpty() && password.isNotEmpty()) {
+            // Show progress bar
+            binding.progressBar.visibility = View.VISIBLE
+
+            // Perform login
+            authViewModel.login(username, password).observe(this) { result ->
+                when (result) {
+                    is Result.Success -> {
+                        // Hide progress bar
+                        binding.progressBar.visibility = View.GONE
+
+                        // Save user data
+                        authViewModel.saveUser(result.data)
+
+                        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                        gotoMain()
                     }
 
-                    updateUI(user)
-                } else {
-                    // Registration failed
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    updateUI(null)
+                    is Result.Error -> {
+                        // Hide progress bar
+                        binding.progressBar.visibility = View.GONE
+
+                        // Display an error message
+                        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
                 }
-                binding.progressBar.visibility = View.GONE
             }
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {

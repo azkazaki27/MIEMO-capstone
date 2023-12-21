@@ -11,13 +11,22 @@ data class LoginResponse(
     val loginResult: AuthUser
 )
 
+data class RegisterResponse(
+    @field:SerializedName("error")
+    val error: Boolean,
+    @field:SerializedName("message")
+    val message: String,
+    @field:SerializedName("loginResult")
+    val loginResult: AuthUser
+)
+
 data class LoginRequest(
-    val email: String,
+    val username: String,
     val password: String
 )
 
-data class RegisterRequest(
-    val name: String,
+data class RegisterRequest  (
+    val username: String,
     val email: String,
     val password: String
 )
@@ -30,8 +39,8 @@ data class SubmitRequest(
 data class AuthUser(
     @field:SerializedName("userId")
     val userId: String,
-    @field:SerializedName("name")
-    val name: String,
+    @field:SerializedName("username")
+    val username: String,
     @field:SerializedName("token")
     val token: String
 )

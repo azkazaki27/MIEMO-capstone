@@ -18,6 +18,7 @@ import com.capstone.miemo.databinding.ActivitySigninBinding
 import com.capstone.miemo.ui.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.capstone.miemo.data.Result
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -46,16 +47,8 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
         hideSystemUI()
 
         binding.btnRegister.setOnClickListener {
-            val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
-            val enteredUsername: String = usernameEditText.text.toString()
-            val email = binding.edEmail.text.toString()
-            val password = binding.edPassword.text.toString()
-            with(sharedPreferences.edit()) {
-                putString("username", enteredUsername)
-                apply()
-            }
-            //register()
-            authViewModel.register(enteredUsername, email, password)
+            register()
+
         }
         binding.tvRegisterToLogin.setOnClickListener { gotoLogin() }
     }
@@ -75,29 +68,40 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
 
     private fun register() {
         binding.progressBar.visibility = View.VISIBLE
+        val username = binding.edUsername.text.toString()
         val email = binding.edEmail.text.toString()
         val password = binding.edPassword.text.toString()
 
         // Use createUserWithEmailAndPassword to register a new user
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Registration success
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    // Registration failed
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    updateUI(null)
+        authViewModel.register(username, email, password).observe(this) { result ->
+            if (result != null) {
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    is Result.Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            this,
+                            result.data,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        // Go to Login
+                        gotoLogin()
+                    }
+
+                    is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(
+                            this,
+                            getString(R.string.error_message, result.error),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-                binding.progressBar.visibility = View.GONE
             }
+        }
     }
 
     private fun updateUI(user: FirebaseUser?) {

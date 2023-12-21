@@ -5,11 +5,10 @@ import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.response.LoginRequest
 import com.capstone.miemo.data.remote.response.LoginResponse
 import com.capstone.miemo.data.remote.response.RegisterRequest
+import com.capstone.miemo.data.remote.response.RegisterResponse
 import com.capstone.miemo.data.remote.response.SubmitRequest
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.Multipart
 import retrofit2.http.POST
 
 interface ApiService {

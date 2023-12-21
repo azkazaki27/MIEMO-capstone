@@ -28,7 +28,7 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
         holder.bind(memo)
         holder.itemView.setOnClickListener {
             val intent = Intent(it.context, DetailActivity::class.java)
-            intent.putExtra("MEMO_DATE", memo.id) // Ganti dengan ID atau data yang sesuai
+            intent.putExtra("MEMO_ID", memo.id)
             it.context.startActivity(intent)
         }
     }

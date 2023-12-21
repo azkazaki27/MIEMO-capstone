@@ -3,9 +3,9 @@ package com.capstone.miemo.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.capstone.miemo.data.local.entity.User
+import com.capstone.miemo.data.remote.response.AuthUser
 import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.response.LoginRequest
-import com.capstone.miemo.data.remote.response.LoginResponse
 import com.capstone.miemo.data.remote.response.RegisterRequest
 import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
@@ -23,13 +23,16 @@ class AuthRepository private constructor(
         loginResult.value = Result.Loading
         val loginRequest = LoginRequest(email, password)
         val client = apiService.login(loginRequest)
-        client.enqueue(object : Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+        client.enqueue(object : Callback<AuthUser> {
+            override fun onResponse(call: Call<AuthUser>, response: Response<AuthUser>) {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
-                    val authUser = loginResponse?.loginResult
-                    if (authUser != null) {
-                        val user = User(authUser.userId, authUser.username, authUser.token)
+                    if (loginResponse != null) {
+                        val user = User(
+                            loginResponse.userId,
+                            loginResponse.user,
+                            loginResponse.token
+                        )
                         loginResult.value = Result.Success(user)
                     }
                 } else {
@@ -42,7 +45,7 @@ class AuthRepository private constructor(
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AuthUser>, t: Throwable) {
                 loginResult.value = Result.Error(t.message.toString())
             }
         })
@@ -66,9 +69,9 @@ class AuthRepository private constructor(
                     val gson = Gson()
                     val type = object : TypeToken<BaseResponse>() {}.type
                     val baseResponse: BaseResponse? = gson.fromJson(response.errorBody()!!.string(), type)
-//                    if (baseResponse != null) {
-//                        result.value = Result.Error(baseResponse.message)
-//                    }
+                    if (baseResponse != null) {
+                        result.value = Result.Error(baseResponse.message)
+                    }
                 }
             }
 

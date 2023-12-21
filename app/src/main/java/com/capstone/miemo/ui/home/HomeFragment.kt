@@ -48,7 +48,7 @@ class  HomeFragment : Fragment() {
         val currentDate = homeViewModel.getCurrentDate()
         val todayMemo = homeViewModel.getMemoByDate(currentDate)
 
-        updateUI(todayMemo)
+        //updateUI(todayMemo)
 
         binding.btnAdd.setOnClickListener {
             showDialog()

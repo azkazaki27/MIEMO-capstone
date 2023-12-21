@@ -39,8 +39,8 @@ data class SubmitRequest(
 data class AuthUser(
     @field:SerializedName("userId")
     val userId: String,
-    @field:SerializedName("username")
-    val username: String,
+    @field:SerializedName("user")
+    val user: String,
     @field:SerializedName("token")
     val token: String
 )

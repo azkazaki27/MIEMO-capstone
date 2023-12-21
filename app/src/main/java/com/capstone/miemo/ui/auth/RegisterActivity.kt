@@ -29,7 +29,6 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
     }
 
     private lateinit var auth: FirebaseAuth
-    private val userCollection = Firebase.firestore.collection("users")
     private lateinit var usernameEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {

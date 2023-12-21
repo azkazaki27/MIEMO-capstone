@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
     private fun setupView() {
         hideSystemUI()
 
-        loggingIn()
+        //loggingIn()
 
         binding.btnLogin.setOnClickListener { login() }
         binding.tvLoginToRegister.setOnClickListener { register() }
@@ -88,6 +88,7 @@ class LoginActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
 
                         // Save user data
+                        Log.d("LoginActivity", result.data.toString())
                         authViewModel.saveUser(result.data)
 
                         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()

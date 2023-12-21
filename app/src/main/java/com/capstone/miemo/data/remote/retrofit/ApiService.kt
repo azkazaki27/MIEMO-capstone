@@ -1,6 +1,7 @@
 package com.capstone.miemo.data.remote.retrofit
 
 
+import com.capstone.miemo.data.remote.response.AuthUser
 import com.capstone.miemo.data.remote.response.BaseResponse
 import com.capstone.miemo.data.remote.response.LoginRequest
 import com.capstone.miemo.data.remote.response.LoginResponse
@@ -15,7 +16,7 @@ interface ApiService {
     // AUTH
 
     @POST("/login")
-    fun login(@Body loginRequest: LoginRequest): Call<LoginResponse>
+    fun login(@Body loginRequest: LoginRequest): Call<AuthUser>
 
     @POST("/register")
     fun register(@Body registerRequest: RegisterRequest): Call<BaseResponse>

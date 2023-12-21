@@ -57,6 +57,10 @@ class ProfileActivity : AppCompatActivity() {
             // Get the entered username
             val enteredUsername: String = usernameEditText.text.toString()
 
+            val editor = sharedPreferences.edit()
+            editor.putString("username", enteredUsername)
+            editor.apply()
+
             profileViewModel.getSession().observe(this){
                 profileViewModel.updateUsername(it.userId, enteredUsername)
 

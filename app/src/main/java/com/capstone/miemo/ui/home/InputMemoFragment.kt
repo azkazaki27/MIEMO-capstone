@@ -50,7 +50,8 @@ class InputMemoFragment: DialogFragment() {
                 val memoText = rootView.findViewById<EditText>(R.id.edt_input).text.toString()
                 //val userId = homeViewModel.userId.toString()
                 val submitMemo = SubmitRequest(user.userId, memoText)
-                submitText(submitMemo)
+                //submitText(submitMemo)
+                homeViewModel.submitMemo(user.userId, memoText)
                 val quote = getText(user.userId).toString()
                 val date = homeViewModel.getCurrentDate()
                 val memo = Memo(

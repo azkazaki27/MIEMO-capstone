@@ -18,6 +18,9 @@ import com.capstone.miemo.databinding.ActivitySigninBinding
 import com.capstone.miemo.ui.ViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.firestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() { private lateinit var binding: ActivitySigninBinding
     private val authViewModel: AuthViewModel by viewModels {
@@ -25,6 +28,7 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
     }
 
     private lateinit var auth: FirebaseAuth
+    private val userCollection = Firebase.firestore.collection("users")
     private lateinit var usernameEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,11 +48,14 @@ class RegisterActivity : AppCompatActivity() { private lateinit var binding: Act
         binding.btnRegister.setOnClickListener {
             val sharedPreferences = getPreferences(Context.MODE_PRIVATE)
             val enteredUsername: String = usernameEditText.text.toString()
+            val email = binding.edEmail.text.toString()
+            val password = binding.edPassword.text.toString()
             with(sharedPreferences.edit()) {
                 putString("username", enteredUsername)
                 apply()
             }
-            register()
+            //register()
+            authViewModel.register(enteredUsername, email, password)
         }
         binding.tvRegisterToLogin.setOnClickListener { gotoLogin() }
     }

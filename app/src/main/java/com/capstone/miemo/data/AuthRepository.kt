@@ -66,9 +66,9 @@ class AuthRepository private constructor(
                     val gson = Gson()
                     val type = object : TypeToken<BaseResponse>() {}.type
                     val baseResponse: BaseResponse? = gson.fromJson(response.errorBody()!!.string(), type)
-                    if (baseResponse != null) {
-                        result.value = Result.Error(baseResponse.message)
-                    }
+//                    if (baseResponse != null) {
+//                        result.value = Result.Error(baseResponse.message)
+//                    }
                 }
             }
 

@@ -8,6 +8,7 @@ import com.capstone.miemo.data.local.database.MemoRoomDatabase
 import com.capstone.miemo.data.local.entity.Memo
 import com.capstone.miemo.data.local.entity.User
 import com.capstone.miemo.data.remote.response.BaseResponse
+import com.capstone.miemo.data.remote.response.SubmitRequest
 import com.capstone.miemo.data.remote.retrofit.ApiService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -40,7 +41,8 @@ class MemoRepository(
     fun submitText(userId: String, text: String): LiveData<Result<String>>{
         val result = MediatorLiveData<Result<String>>()
         result.value = Result.Loading
-        val client = apiService.submitMemo(userId, text)
+        val submitRequest = SubmitRequest(userId, text)
+        val client = apiService.submitMemo(submitRequest)
         client.enqueue(object : Callback<BaseResponse>{
             override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
                 if (response.isSuccessful) {

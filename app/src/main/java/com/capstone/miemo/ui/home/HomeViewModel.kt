@@ -35,4 +35,6 @@ class HomeViewModel(private val repository: MemoRepository) : ViewModel() {
     fun getMemoByDate(date: String): LiveData<Memo>{
         return repository.getMemoByDate(date)
     }
+
+    fun submitMemo(userId: String, text: String) = repository.submitText(userId, text)
 }

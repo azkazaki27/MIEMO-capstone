@@ -9,6 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getString
+import com.capstone.miemo.MainActivity
 import com.capstone.miemo.R
 import java.util.Calendar
 
@@ -16,8 +18,8 @@ class DailyReminder : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        val title = R.string.app_name.toString()
-        val message = R.string.greeting.toString()
+        val title = getString(context, R.string.app_name)
+        val message = getString(context, R.string.greeting)
 
         showNotification(context, title, message, 100)
     }
@@ -28,8 +30,8 @@ class DailyReminder : BroadcastReceiver() {
         val calendar = Calendar.getInstance()
 
         calendar.apply {
-            set(Calendar.HOUR_OF_DAY, 10)
-            set(Calendar.MINUTE, 8)
+            set(Calendar.HOUR_OF_DAY, 18)
+            set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
 
@@ -60,11 +62,22 @@ class DailyReminder : BroadcastReceiver() {
         val channelId = "Channel_1"
         val channelName = "Miemo channel"
 
+        val intent = Intent(context, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,
+            intent,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
+        )
+
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder = NotificationCompat.Builder(context, channelId)
             .setSmallIcon(R.drawable.ic_notifications_black_24dp)
             .setContentTitle(title)
             .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId,

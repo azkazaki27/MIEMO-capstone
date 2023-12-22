@@ -1,6 +1,7 @@
 package com.capstone.miemo.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.capstone.miemo.R
 import com.capstone.miemo.data.local.database.MemoRoomDatabase
 import com.capstone.miemo.data.local.entity.Memo
+import com.capstone.miemo.data.local.output.EmotionRersult
 import com.capstone.miemo.data.remote.response.SubmitRequest
 import com.capstone.miemo.databinding.FragmentInputMemoBinding
 import com.capstone.miemo.ui.ViewModelFactory
@@ -25,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.lang.Error
 
 class InputMemoFragment: DialogFragment() {
 
@@ -51,19 +54,23 @@ class InputMemoFragment: DialogFragment() {
                 //val userId = homeViewModel.userId.toString()
                 val submitMemo = SubmitRequest(user.userId, memoText)
                 //submitText(submitMemo)
-                homeViewModel.submitMemo(user.userId, memoText)
-                val quote = getText(user.userId).toString()
-                val date = homeViewModel.getCurrentDate()
-                val memo = Memo(
-                    0,
-                    memoText,
-                    quote,
-                    date
-                )
-                saveMemo(memo)
+                CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.Main){
+                        homeViewModel.submitMemo(user.userId, memoText)
+                        //val quote = getText(user.userId).toString()
+                        val date = homeViewModel.getCurrentDate()
+                        val memo = Memo(
+                            0,
+                            memoText,
+                            getText(user.userId).toString(),
+                            date
+                        )
+                        saveMemo(memo)
+                    }
+                }
+
             }
         }
-
 
         return rootView
     }

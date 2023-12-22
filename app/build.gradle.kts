@@ -76,7 +76,7 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.2.0-alpha06")
     implementation ("androidx.arch.core:core-testing:2.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-add    implementation ("com.google.code.gson:gson:2.9.1")
+    implementation ("com.google.code.gson:gson:2.9.1")
 
     kapt ("androidx.room:room-compiler:2.5.1")
     testImplementation ("androidx.arch.core:core-testing:2.2.0") // InstantTaskExecutorRule
@@ -88,4 +88,10 @@ add    implementation ("com.google.code.gson:gson:2.9.1")
     testImplementation ("org.junit.jupiter:junit-jupiter-api:5.10.0-M1")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
     androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+
+    //implementation("org.tensorflow:tensorflow-lite:0.4.0")
+    implementation("org.tensorflow:tensorflow-lite-task-text:0.4.0")
+    implementation ("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0")
+    implementation ("org.tensorflow:tensorflow-lite-gpu:2.9.0")
+
 }

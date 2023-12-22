@@ -17,3 +17,8 @@ data class Messages (
 data class Quotes (
     val message: String
 )
+
+data class EmotionRersult(
+    val result: String,
+    val score: Float
+)

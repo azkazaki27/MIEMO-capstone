@@ -11,6 +11,7 @@ import com.capstone.miemo.ui.ViewModelFactory
 class DetailActivity : AppCompatActivity() {
     private lateinit var tvDate: TextView
     private lateinit var tvMemo: TextView
+    private lateinit var tvQuote: TextView
     private lateinit var backButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class DetailActivity : AppCompatActivity() {
         // Inisialisasi TextView di halaman detail
         tvDate = findViewById(R.id.tv_date)
         tvMemo = findViewById(R.id.tv_memo)
+        tvQuote = findViewById(R.id.tv_quote)
         backButton = findViewById(R.id.btn_back)
 
         // Observe LiveData untuk memo yang sesuai dengan memoId
@@ -32,8 +34,9 @@ class DetailActivity : AppCompatActivity() {
             // Check if memo is not null before accessing its properties
             if (memo != null) {
                 // Update TextView di halaman detail dengan informasi memo
-                tvDate.text = memo.date // Assuming you have a getDate() method in your Memo class
-                tvMemo.text = memo.memo // Assuming you have a getMemo() method in your Memo class
+                tvDate.text = memo.date
+                tvMemo.text = memo.memo
+                tvQuote.text = memo.quote
             } else {
                 // Handle the case where memo is null, e.g., show an error message or navigate back
             }

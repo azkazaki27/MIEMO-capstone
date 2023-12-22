@@ -76,7 +76,7 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.2.0-alpha06")
     implementation ("androidx.arch.core:core-testing:2.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-add    implementation ("com.google.code.gson:gson:2.9.1")
+    implementation ("com.google.code.gson:gson:2.9.1")
 
     kapt ("androidx.room:room-compiler:2.5.1")
     testImplementation ("androidx.arch.core:core-testing:2.2.0") // InstantTaskExecutorRule

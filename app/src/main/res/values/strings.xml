@@ -41,5 +41,6 @@
     <string name="logout_success">Log out success, redirect to login page</string>
     <string name="login_success">Login success</string>
     <string name="error_message">There\'s an error: %1$s</string>
+    <string name="you_haven_t_written_a_memo_today">You Haven\'t Written a Memo Today</string>
 
 </resources>

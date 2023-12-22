@@ -14,7 +14,7 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
 
     // Fungsi untuk memperbarui data adapter dengan daftar memo yang baru
     fun updateData(newMemoList: List<Memo>) {
-        memoList = newMemoList
+        memoList = newMemoList.sortedByDescending { it.date }
         notifyDataSetChanged()
     }
 
